@@ -1,0 +1,74 @@
+﻿@model IEnumerable<OrderDeliveryTracker.Models.Order.Order>
+
+@{
+    ViewData["Title"] = "Order Delivery Tracker";
+}
+
+<h1>Order Delivery Tracker</h1>
+<form asp-controller="Orders" asp-action="Index">
+    <div align="right">
+        <p>
+            <strong>OrderName: </strong> <input type="text" name="SearchString" />
+            <input type="submit" value="Search" />
+        </p>
+    </div>
+    
+</form>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrderStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreatedTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifiedBy)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedBy)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
