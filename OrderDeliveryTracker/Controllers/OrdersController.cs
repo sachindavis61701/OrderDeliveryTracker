@@ -71,9 +71,9 @@ namespace OrderDeliveryTracker.Controllers
         {
             if (ModelState.IsValid)
             {
-                var orderId = _context.Order.OrderByDescending(x => x.OrderId).FirstOrDefault().OrderId;
-
-                order.OrderId = orderId + 1;
+                order.ModifiedBy = User.Identity.Name;
+                order.ModifiedTime = DateTime.Now;
+                order.CreatedTime = DateTime.Now;
 
                 _context.Add(order);
                 await _context.SaveChangesAsync();
@@ -114,6 +114,9 @@ namespace OrderDeliveryTracker.Controllers
             {
                 try
                 {
+                    order.ModifiedBy = User.Identity.Name;
+                    order.ModifiedTime = DateTime.Now;
+
                     _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
@@ -127,6 +130,10 @@ namespace OrderDeliveryTracker.Controllers
                     {
                         throw;
                     }
+                }
+                catch (ArgumentNullException)
+                {
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
